@@ -26,15 +26,17 @@
 #   Reading [5]: 69.3
 #   Average of valid readings: 70.98
 # ============================================================
-
+# N/A and 'sensor_error' are not valid float values, so the conversion fails.
 readings = ['72.1', '68.5', 'N/A', '74.0', 'sensor_error', '69.3']
 
 valid = []
 
 for i, r in enumerate(readings):
-    temp = float(r)           # <-- this line crashes on bad strings
-    print(f'Reading [{i}]: {temp}')
-    valid.append(temp)
-
+    try:
+        temp = float(r)          
+        print(f'Reading [{i}]: {temp}')
+        valid.append(temp)
+    except ValueError:
+        print(f'[index {i}] Skipped bad reading: {r}')
 average = sum(valid) / len(valid)
 print(f'Average of valid readings: {round(average, 2)}')
